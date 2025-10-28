@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery – GlassEase</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f9f9f9; margin: 0; padding: 0; }
+    nav { display: flex; justify-content: space-between; padding: 15px 50px; background: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    nav .logo { font-size: 1.5em; font-weight: bold; color: #0a7fbb; }
+    nav ul { list-style: none; display: flex; gap: 25px; }
+    nav ul li a { text-decoration: none; color: #333; }
+    nav ul li a:hover { color: #0a7fbb; }
+    .cart-btn { background: #0a7fbb; color: #fff; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; }
+    .cart-btn .badge { background: red; padding: 3px 6px; border-radius: 50%; font-size: 12px; margin-left: 5px; }
+
+    .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 50px; }
+    .product-card { background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 15px; text-align: center; transition: 0.3s; }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { max-width: 100%; border-radius: 12px; margin-bottom: 15px; }
+    .product-card h3 { background: #0a7fbb; color: #fff; padding: 8px; border-radius: 6px; display: inline-block; }
+    .product-card p { font-size: 1.2em; margin: 10px 0; }
+    .add-btn { background: #0a7fbb; color: #fff; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; }
+    .add-btn:hover { background: #095f8a; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">GlassEase</div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="book.html">Book Now</a></li>
+      <li><a href="track.php">Track Order</a></li>
+      <li><a href="feedback.php">Feedback</a></li>
+    </ul>
+    <a href="cart.html"><button class="cart-btn"><i class="fas fa-shopping-cart"></i> Cart <span id="cart-count" class="badge">0</span></button></a>
+  </nav>
+
+  <!-- Gallery -->
+  <section class="gallery">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1616627563165-1b10f8917ac9" alt="Sliding Glass Door">
+      <h3>Sliding Glass Door</h3>
+      <p>₹15,000</p>
+      <button class="add-btn" onclick="addToCart('Sliding Glass Door', 15000, 'https://images.unsplash.com/photo-1616627563165-1b10f8917ac9')">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Frosted Glass Door">
+      <h3>Frosted Glass Door</h3>
+      <p>₹12,500</p>
+      <button class="add-btn" onclick="addToCart('Frosted Glass Door', 12500, 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c')">Add to Cart</button>
+    </div>
+
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1598300187392-cd62e21d5db7" alt="Glass Panel Door">
+      <h3>Glass Panel Door</h3>
+      <p>₹18,000</p>
+      <button class="add-btn" onclick="addToCart('Glass Panel Door', 18000, 'https://images.unsplash.com/photo-1598300187392-cd62e21d5db7')">Add to Cart</button>
+    </div>
+  </section>
+
+  <script>
+    function addToCart(name, price, img) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({name, price, img});
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCount();
+      alert(name + " added to cart!");
+    }
+
+    function updateCartCount() {
+      let cart = JSON.parse(localStorage.getItem('cart')) || [];
+      document.getElementById("cart-count").textContent = cart.length;
+    }
+
+    updateCartCount();
+  </script>
+
+</body>
+</html>
