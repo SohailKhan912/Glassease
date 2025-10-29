@@ -116,3 +116,4 @@ Complete React application replacing all HTML/PHP frontend.
 All converted MERN stack code is contained within these two folders. The old PHP/HTML files remain in the root directory for reference but are no longer used.
 
 
+
