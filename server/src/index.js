@@ -8,6 +8,10 @@ import authRouter from './routes/auth.js';
 import ordersRouter from './routes/orders.js';
 import feedbackRouter from './routes/feedback.js';
 import uploadRouter from './routes/upload.js';
+import productsRouter from './routes/products.js';
+import reviewsRouter from './routes/reviews.js';
+import wishlistRouter from './routes/wishlist.js';
+import paymentsRouter from './routes/payments.js';
 
 dotenv.config();
 
@@ -27,6 +31,10 @@ app.use('/api/auth', authRouter);
 app.use('/api/orders', ordersRouter);
 app.use('/api/feedback', feedbackRouter);
 app.use('/api/upload', uploadRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/reviews', reviewsRouter);
+app.use('/api/wishlist', wishlistRouter);
+app.use('/api/payments', paymentsRouter);
 
 const PORT = process.env.PORT || 4000;
 
