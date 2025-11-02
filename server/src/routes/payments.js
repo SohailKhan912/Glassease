@@ -6,14 +6,19 @@ import { sendMail } from '../lib/mailer.js';
 
 const router = Router();
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY,
-  key_secret: process.env.RAZORPAY_SECRET
-});
+function getRazorpay() {
+  const key_id = process.env.RAZORPAY_KEY;
+  const key_secret = process.env.RAZORPAY_SECRET;
+  if (!key_id || !key_secret) {
+    throw new Error('Razorpay keys not configured');
+  }
+  return new Razorpay({ key_id, key_secret });
+}
 
 // Create Razorpay order
 router.post('/order', async (req, res) => {
   try {
+    const razorpay = getRazorpay();
     const { amount, currency = 'INR', receipt } = req.body;
     const options = {
       amount: Math.round(Number(amount) * 100), // Razorpay wants paise
