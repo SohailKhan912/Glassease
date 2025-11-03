@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { Product } from '../models/Product.js';
 import { Category } from '../models/Category.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
+import mongoose from 'mongoose';
 
 const router = Router();
 
@@ -50,8 +51,14 @@ router.get('/', async (req, res) => {
     filter.$text = { $search: q };
   }
   if (category) {
-    const cat = await Category.findOne({ $or: [{ _id: category }, { slug: category }] }).select('_id');
-    if (cat) filter.category = cat._id;
+    let catDoc = null;
+    if (mongoose.isValidObjectId(category)) {
+      catDoc = await Category.findById(category).select('_id');
+    }
+    if (!catDoc) {
+      catDoc = await Category.findOne({ slug: String(category).toLowerCase() }).select('_id');
+    }
+    if (catDoc) filter.category = catDoc._id;
   }
   if (minPrice || maxPrice) {
     filter['price.amount'] = {};
@@ -76,7 +83,13 @@ router.get('/', async (req, res) => {
 // Get product by slug or id
 router.get('/detail/:slugOrId', async (req, res) => {
   const { slugOrId } = req.params;
-  const product = await Product.findOne({ $or: [{ _id: slugOrId }, { slug: slugOrId }] });
+  let product = null;
+  if (mongoose.isValidObjectId(slugOrId)) {
+    product = await Product.findById(slugOrId);
+  }
+  if (!product) {
+    product = await Product.findOne({ slug: slugOrId });
+  }
   if (!product) return res.status(404).json({ message: 'Not found' });
   res.json(product);
 });
