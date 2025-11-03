@@ -1,5 +1,5 @@
 "use client";
-import { useWishlist } from "@/src/store/WishlistContext";
+import { useWishlist } from "@/store/WishlistContext";
 
 export default function WishlistPage() {
   const { items, remove } = useWishlist();
