@@ -3,11 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import Link from "next/link";
-import { ThemeProvider } from "next-themes";
+import Providers from "./providers";
 import AuthButton from "../components/AuthButton";
 import CartWishlistIcons from "../components/CartWishlistIcons";
-import { CartProvider } from "../store/CartContext";
-import { WishlistProvider } from "../store/WishlistContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,31 +26,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen bg-gray-100 text-gray-900 dark:bg-neutral-900 dark:text-gray-50">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <CartProvider>
-            <WishlistProvider>
-              <header className="sticky top-0 z-20 bg-white/90 dark:bg-neutral-900/90 shadow-lg px-2 md:px-6 flex items-center justify-between h-16">
-                <div className="flex items-center gap-6">
-                  <Link href="/" className="font-extrabold text-lg tracking-wide text-blue-600">FlipEase</Link>
-                  <nav className="hidden md:flex gap-4">
-                    <Link href="/catalog" className="hover:text-primary font-medium">Shop</Link>
-                    <Link href="/wishlist" className="hover:text-primary font-medium">Wishlist</Link>
-                    <Link href="/cart" className="hover:text-primary font-medium">Cart</Link>
-                  </nav>
-                </div>
-                <div className="flex items-center gap-4">
-                  <CartWishlistIcons />
-                  <AuthButton />
-                  {/* Theme toggle placeholder - implement with next-themes if desired */}
-                </div>
-              </header>
-              <main className="min-h-[80vh] pt-2 pb-10 px-2 md:px-0 mx-auto max-w-7xl">{children}</main>
-              <footer className="text-center text-gray-500 dark:text-gray-400 py-6 border-t border-gray-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80">
-                &copy; {new Date().getFullYear()} FlipEase. All rights reserved.
-              </footer>
-            </WishlistProvider>
-          </CartProvider>
-        </ThemeProvider>
+        <Providers>
+          <header className="sticky top-0 z-20 bg-white/90 dark:bg-neutral-900/90 shadow-lg px-2 md:px-6 flex items-center justify-between h-16">
+            <div className="flex items-center gap-6">
+              <Link href="/" className="font-extrabold text-lg tracking-wide text-blue-600">FlipEase</Link>
+              <nav className="hidden md:flex gap-4">
+                <Link href="/catalog" className="hover:text-primary font-medium">Shop</Link>
+                <Link href="/wishlist" className="hover:text-primary font-medium">Wishlist</Link>
+                <Link href="/cart" className="hover:text-primary font-medium">Cart</Link>
+              </nav>
+            </div>
+            <div className="flex items-center gap-4">
+              <CartWishlistIcons />
+              <AuthButton />
+            </div>
+          </header>
+          <main className="min-h-[80vh] pt-2 pb-10 px-2 md:px-0 mx-auto max-w-7xl">{children}</main>
+          <footer className="text-center text-gray-500 dark:text-gray-400 py-6 border-t border-gray-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80">
+            &copy; {new Date().getFullYear()} FlipEase. All rights reserved.
+          </footer>
+        </Providers>
       </body>
     </html>
   );
