@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { getJSON } from "@/src/lib/api";
-import { useCart } from "@/src/store/CartContext";
-import { useWishlist } from "@/src/store/WishlistContext";
+import { getJSON } from "@/lib/api";
+import { useCart } from "@/store/CartContext";
+import { useWishlist } from "@/store/WishlistContext";
 import Script from "next/script";
 
 type Product = { _id: string; title: string; price?: { amount: number }; images?: string[]; slug?: string; category?: string; modelUrl?: string };
